@@ -35,6 +35,15 @@ return array(
                     ),
                 ),
             ),
+            'acquisition.rest.journal' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/journal/[:id]',
+                    'defaults' => array(
+                        'controller' => 'Acquisition\\V1\\Rest\\Journal\\Controller',
+                    ),
+                ),
+            ),
         ),
     ),
 
