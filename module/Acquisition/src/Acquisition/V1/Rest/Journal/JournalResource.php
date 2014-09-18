@@ -48,6 +48,7 @@ class JournalResource extends AbstractResourceListener
      */
     public function deleteList($data)
     {
+
         return new ApiProblem(405, 'The DELETE method has not been defined for collections');
     }
 
@@ -59,7 +60,7 @@ class JournalResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return $this->dm->fetchOne($id);
+        return new JsonModel($this->dm->find($id));
 //        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
     }
 
@@ -71,7 +72,7 @@ class JournalResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $result = $this->dm->fetchAll();
+        $result = $this->dm->findAll();
         $temp = array();
         foreach ($result as $item) {
             $temp[] = $item->toArray();
