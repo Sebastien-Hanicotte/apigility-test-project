@@ -8,7 +8,8 @@
 namespace Acquisition\V1\Rest\Journal;
 
 
-class JournalManagerResourceFactory {
+class JournalResourceFactory
+{
 
     public function __invoke($services) {
         return new JournalResource($services->get('doctrine.documentmanager.odm_default'));
