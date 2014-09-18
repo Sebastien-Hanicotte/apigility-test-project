@@ -1,0 +1,14 @@
+{
+    "date": "2014-08-13",
+    "ip": "127.0.0.1",
+    "source": "Ici",
+    "type": "2",
+    "data" : {
+        "email": "test@test.com",
+        "civility": "M",
+        "destination": [
+            "CLa",
+            "CPasLa"
+        ]
+    }
+}

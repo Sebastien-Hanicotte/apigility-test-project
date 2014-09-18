@@ -1,0 +1,5 @@
+{"class":"address","minify":{"address":"a","postal_code":"pc","department":"d","city":"c","country":"co","address_checked":"ac"}}
+{"class":"profil","minify":{"firstname":"f","lastname":"l","birth_date":"bd","email":"e","civility":"c","job":"j","phone":"p","addresses":"a"}}
+{"class":"subdata","minify":{"profil":"p","destination":"de"}}
+{"class":"unsubdata","minify":{"email":"e","civility":"c","destination":"de"}}
+{"class":["journalevent","subevent","unsubevent"],"minify":{"date":"d","ip":"i","source":"s","type":"t","data":"da"}}

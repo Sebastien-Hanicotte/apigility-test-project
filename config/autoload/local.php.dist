@@ -1,0 +1,27 @@
+<?php
+/**
+ * Local Configuration Override
+ *
+ * This configuration override file is for overriding environment-specific and
+ * security-sensitive configuration information. Copy this file without the
+ * .dist extension at the end and populate values as needed.
+ *
+ * @NOTE: This file is ignored from Git by default with the .gitignore included
+ * in ZendSkeletonApplication. This is a good practice, as it prevents sensitive
+ * credentials from accidentally being committed into version control.
+ */
+
+return array(
+    'phpSettings'   => array(
+        'display_startup_errors'        => true,
+        'display_errors'                => true,
+        'max_execution_time'            => 60,
+        'mbstring.internal_encoding'    => 'UTF-8',
+        'xdebug.var_display_max_depth'  => 3,
+    ),
+
+    'data_base_dir' => '/tmp',
+
+    // default route
+    // 'default_route' => '/route/to/dashboard',
+);

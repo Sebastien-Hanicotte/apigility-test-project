@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="rsync-deployment" default="deploy">
+    <taskdef name="sync" classname="phing.tasks.ext.FileSyncTask" />
+
+    <property name="rsync.user" value="MyUsername" override="true" />
+    <property name="rsync.host" value="" override="true" />
+    <property name="rsync.remoteDir" value="/Users/Sebastien/Documents/0-GIT/V2/dev-tools/vagrant/VM-lamp/sites/apigility" override="true" />
+    <property name="rsync.excludeFile" value=".gitignore" override="true" />
+    <property name="rsync.options" value="-rtzp --chmod u=rwx,g=rx,o=rx " override="true" />
+    <property name="rsync.path" value="/usr/bin/rsync" override="true" />
+    <property name="rsync.dryrun" value="false" override="true" />
+    <property name="rsync.verbose" value="true" override="true" />
+    <property name="rsync.checksum" value="true" override="true" />
+
+    <target name="deploy">
+        <sync
+                rsyncPath="${rsync.path}"
+                sourcedir="."
+                destinationdir="${rsync.remoteDir}"
+                dryrun="${rsync.dryrun}"
+                excludeFile="${rsync.excludeFile}"
+                options="${rsync.options}"
+                itemizeChanges="true"
+                verbose="${rsync.verbose}"
+                checksum="${rsync.checksum}"
+                />
+    </target>
+</project>

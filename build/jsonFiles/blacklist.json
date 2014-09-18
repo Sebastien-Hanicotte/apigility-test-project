@@ -1,0 +1,10 @@
+{
+    "date": "2014-08-13",
+    "ip": "127.0.0.1",
+    "source": "Ici",
+    "type": "3",
+    "data" : {
+        "emails": ["test@test.com", "toto@foo.com"],
+        "comment": "Il a fait une grosse bêtise"
+    }
+}
