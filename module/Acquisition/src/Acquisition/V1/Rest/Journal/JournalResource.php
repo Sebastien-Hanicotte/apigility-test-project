@@ -4,7 +4,7 @@ namespace Acquisition\V1\Rest\Journal;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Zend\View\Model\JsonView;
+use Zend\View\Model\JsonModel;
 
 class JournalResource extends AbstractResourceListener
 {
@@ -76,7 +76,7 @@ class JournalResource extends AbstractResourceListener
         foreach ($result as $item) {
             $temp[] = $item->toArray();
         }
-        return new JsonView($temp);
+        return new JsonModel($temp);
     }
 
 
