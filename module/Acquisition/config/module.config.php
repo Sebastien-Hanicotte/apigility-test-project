@@ -185,19 +185,6 @@ return array(
                     ),
                 ),
             ),
-            2 => array(
-                'name' => 'date',
-                'required' => true,
-                'filters' => array(),
-                'validators' => array(
-                    0 => array(
-                        'name' => 'Zend\\Validator\\Date',
-                        'options' => array(
-                            'format' => 'Y-m-d H:i:s',
-                        ),
-                    ),
-                ),
-            ),
         ),
     ),
 );

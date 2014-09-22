@@ -4,11 +4,12 @@
 namespace Acquisition\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use Acquisition\Document\SubscriptionData;
+use Acquisition\Document\UnsubscriptionData;
 
 /** @ODM\Document(db="test", collection="journal") */
-class Journal
+class Journal extends AbstractDocument
 {
-
     /** @ODM\Id(name="_id") */
     private $id;
 
@@ -24,29 +25,13 @@ class Journal
     /** @ODM\Field(name="t", type="int") */
     private $type;
 
-    public function get($property)
-    {
-        $method = 'get'.ucfirst($property);
-        if (method_exists($this, $method))
-        {
-            return $this->$method();
-        } else {
-            $propertyName = $property;
-            return $this->$propertyName;
-        }
-    }
-
-    public function set($property, $value)
-    {
-        $method = 'set'.ucfirst($property);
-        if (method_exists($this, $method))
-        {
-            $this->$method($value);
-        } else {
-            $propertyName = $property;
-            $this->$propertyName = $value;
-        }
-    }
+    /** @ODM\EmbedOne(name="da", discriminatorMap={
+     *    "subscription"="SubscriptionData",
+     *    "unsubscription"="UnsubscriptionData"
+     * })
+     */
+    /** @ODM\EmbedOne(name="da", targetDocument="SubscriptionData") */
+    private $data;
 
     public function toArray()
     {
@@ -56,8 +41,27 @@ class Journal
             'ip' => $this->get('ip'),
             'source' => $this->get('source'),
             'type' => $this->get('type'),
-
         );
+
+        if (is_object($this->get('data'))) {
+            $returnValue['data'] = $this->get('data')->toArray();
+        }
         return $returnValue;
+    }
+
+    public function fromArray($data)
+    {
+        foreach($data as $key=>$value) {
+            $this->set($key, $value);
+        }
+        $dataValue = null;
+        if (array_key_exists('data', $data)) {
+            switch($this->get('type')) {
+                case '1':
+                    $dataValue = new SubscriptionData();
+                    $dataValue->fromArray($data->data);
+            }
+        }
+        $this->set('data', $dataValue);
     }
 }

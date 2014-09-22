@@ -4,7 +4,6 @@ namespace Acquisition\V1\Rest\Journal;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Zend\View\Model\JsonModel;
 
 class JournalResource extends AbstractResourceListener
 {
@@ -22,7 +21,14 @@ class JournalResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $journal = new \Acquisition\Document\Journal();
+        $journal->fromArray($data);
+        $this->dm->getDocumentManager()->persist($journal);
+        $this->dm->getDocumentManager()->flush();
+        if ($journal->get('id') != '') {
+            return $journal->toArray();
+        }
+        return new ApiProblem(500, 'Unable to create the new journal entry');
     }
 
     /**
@@ -34,9 +40,8 @@ class JournalResource extends AbstractResourceListener
     public function delete($id)
     {
         $journal = $this->dm->find($id);
-        $this->dm->persist($journal);
-        $journal->remove();
-        $this->dm->flush();
+        $this->dm->getDocumentManager()->remove($journal);
+        $this->dm->getDocumentManager()->flush();
         return new ApiProblem(202, 'The DELETE method has not been executed...');
     }
 
@@ -60,7 +65,7 @@ class JournalResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new JsonModel($this->dm->find($id));
+        return $this->dm->find($id)->toArray();
 //        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
     }
 
@@ -73,11 +78,12 @@ class JournalResource extends AbstractResourceListener
     public function fetchAll($params = array())
     {
         $result = $this->dm->findAll();
+//        var_dump($result);die();
         $temp = array();
         foreach ($result as $item) {
             $temp[] = $item->toArray();
         }
-        return new JsonModel($temp);
+        return $temp;
     }
 
 
