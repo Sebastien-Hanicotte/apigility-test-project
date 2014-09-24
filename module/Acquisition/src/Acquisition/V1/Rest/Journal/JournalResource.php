@@ -3,14 +3,14 @@ namespace Acquisition\V1\Rest\Journal;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use Acquisition\ImporterInterface;
 
 class JournalResource extends AbstractResourceListener
 {
     protected $dm;
 
-    public function __construct(DocumentManager $journalDocumentManager) {
-        $this->dm = $journalDocumentManager->getRepository('\Acquisition\Document\Journal');
+    public function __construct(ImporterInterface $journalDocumentManager) {
+        $this->dm = $journalDocumentManager;
     }
 
     /**
@@ -63,10 +63,9 @@ class JournalResource extends AbstractResourceListener
      * @param  mixed $id
      * @return ApiProblem|mixed
      */
-    public function fetch($id)
+    public function fetch($email)
     {
-        return $this->dm->find($id)->toArray();
-//        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        return $this->dm->getJournal($email);
     }
 
     /**
@@ -77,13 +76,8 @@ class JournalResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $result = $this->dm->findAll();
-//        var_dump($result);die();
-        $temp = array();
-        foreach ($result as $item) {
-            $temp[] = $item->toArray();
-        }
-        return $temp;
+        $result = $this->dm->fetchAll();
+        return $result;
     }
 
 

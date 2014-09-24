@@ -12,6 +12,10 @@ class JournalResourceFactory
 {
 
     public function __invoke($services) {
-        return new JournalResource($services->get('doctrine.documentmanager.odm_default'));
+        $m = new \MongoClient();
+        $collection = new \MongoCollection($m->test, "journal");
+
+        $repositoryManager = new \Acquisition\DomainRepository\RepositoryManager($collection);
+        return new JournalResource($repositoryManager);
     }
 } 
